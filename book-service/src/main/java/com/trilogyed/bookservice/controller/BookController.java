@@ -1,6 +1,7 @@
 package com.trilogyed.bookservice.controller;
 
-import com.trilogyed.bookservice.model.Book;
+import com.trilogyed.bookservice.dao.BookRepository;
+import com.trilogyed.bookservice.dto.Book;
 import com.trilogyed.bookservice.util.messages.Note;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BookController {
+    @Autowired
+    private BookRepository bookRepository;
     public static final String EXCHANGE = "note-exchange";
     public static final String ROUTING_KEY = "note.#";
 
