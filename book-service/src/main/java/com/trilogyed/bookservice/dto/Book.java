@@ -1,4 +1,4 @@
-package com.trilogyed.bookservice.model;
+package com.trilogyed.bookservice.dto;
 
 public class Book {
     private int bookId;
