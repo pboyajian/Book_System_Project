@@ -1,6 +1,15 @@
 package com.trilogyed.bookservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@Table(name="book")
 public class Book {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int bookId;
     private String title;
     private String author;

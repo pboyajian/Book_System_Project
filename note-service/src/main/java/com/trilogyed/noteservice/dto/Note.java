@@ -1,9 +1,15 @@
 package com.trilogyed.noteservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@Table(name="note")
 public class Note {
-
+@Id
+@GeneratedValue(strategy= GenerationType.AUTO)
     private int noteId;
     private int bookId;
     private String note;
