@@ -7,16 +7,17 @@ import com.trilogyed.bookservice.viewmodel.BookViewModel;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class BookServiceLayer {
 
     private BookRepository bookRepository;
-
     private NoteServerClient noteServerClient;
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
@@ -39,8 +40,8 @@ public class BookServiceLayer {
         book=bookRepository.save(book);
         bvm.getNoteList().forEach(
                 x ->{ System.out.println("Sending message...");
-                rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, x);
-                System.out.println("Message Sent");}
+                    rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, x);
+                    System.out.println("Message Sent");}
         );
         bvm.setBookId(book.getBookId());
         return bvm;

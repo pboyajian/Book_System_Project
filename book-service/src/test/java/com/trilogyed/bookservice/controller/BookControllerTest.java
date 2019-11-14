@@ -55,16 +55,16 @@ public class BookControllerTest {
 
     }
 
-    @Test
-    public void shouldAddBook(){
-        BookViewModel bookViewModelToAdd = new BookViewModel();
-        bookViewModelToAdd.setAuthor(AUTHOR);
-        bookViewModelToAdd.setTitle(TITLE);
-        bookViewModelToAdd.setNoteList(noteList);
-        when(serviceLayer.addBook(bookViewModel)).thenReturn(bookViewModel);
-
-
-    }
+//    @Test
+//    public void shouldAddBook(){
+//        BookViewModel bookViewModelToAdd = new BookViewModel();
+//        bookViewModelToAdd.setAuthor(AUTHOR);
+//        bookViewModelToAdd.setTitle(TITLE);
+//        bookViewModelToAdd.setNoteList(noteList);
+//        when(serviceLayer.addBook(bookViewModel)).thenReturn(bookViewModel);
+//
+//
+//    }
 
 
 }
