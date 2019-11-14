@@ -22,6 +22,8 @@ public class BookServiceLayerTest {
     private BookRepository bookRepository;
     private NoteServerClient noteServerClient;
     private BookServiceLayer serviceLayer;
+    private static final String correctAuthor = "Dickens";
+    private static final String correctTitle = "Tale of Two Cities";
 
 
 
@@ -39,8 +41,8 @@ public class BookServiceLayerTest {
     @Test
     public void shouldCreateGetGetAll(){
         BookViewModel bvm = new BookViewModel();
-        bvm.setAuthor("Dickens");
-        bvm.setTitle("Tale of Two Cities");
+        bvm.setAuthor(correctAuthor);
+        bvm.setTitle(correctTitle);
         List<Note> notes = new ArrayList<>();
         Note note2 = new Note();
         note2.setBookId(1);
@@ -62,14 +64,14 @@ public class BookServiceLayerTest {
     @Test
     public void shouldBuildBookViewModel(){
         BookViewModel bvm = new BookViewModel();
-        bvm.setAuthor("Dickens");
-        bvm.setTitle("Tale of Two Cities");
+        bvm.setAuthor(correctAuthor);
+        bvm.setTitle(correctTitle);
         bvm.setBookId(1);
 
         Book book2 = new Book();
         book2.setBookId(1);
-        book2.setAuthor("Dickens");
-        book2.setTitle("Tale of Two Cities");
+        book2.setAuthor(correctAuthor);
+        book2.setTitle(correctTitle);
 
         Note note2 = new Note();
         note2.setBookId(1);
@@ -108,20 +110,20 @@ public class BookServiceLayerTest {
     private void setUpBookRepoMock(){
 
         Book book = new Book();
-        book.setAuthor("Dickens");
-        book.setTitle("Tale of Two Cities");
+        book.setAuthor(correctAuthor);
+        book.setTitle(correctTitle);
 
         Book book2 = new Book();
         book2.setBookId(1);
-        book2.setAuthor("Dickens");
-        book2.setTitle("Tale of Two Cities");
+        book2.setAuthor(correctAuthor);
+        book2.setTitle(correctTitle);
 
         List<Book> bookList = new ArrayList<>();
         bookList.add(book2);
 
-        doReturn(Optional.of(book2)).when(bookRepository).findById(1);
+        doReturn(book2).when(bookRepository).getOne(1);
         doReturn(bookList).when(bookRepository).findAll();
-        doReturn(Optional.of(book2)).when(bookRepository).save(book);
+        doReturn(book2).when(bookRepository).save(book);
 
     }
 }

@@ -7,6 +7,7 @@ import com.trilogyed.bookservice.viewmodel.BookViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -33,10 +34,13 @@ public class BookServiceLayer {
         return bvm;
     }
     public BookViewModel findBook(int id){
-        return null;
+        return buildBookViewModel(bookRepository.getOne(id));
     }
 
-    public List<BookViewModel> findAllBooks() {return null;
+    public List<BookViewModel> findAllBooks() {
+        List<BookViewModel> bookViewModelList = new ArrayList<>();
+        bookRepository.findAll().forEach(book->bookViewModelList.add(buildBookViewModel(book)));
+        return bookViewModelList;
     }
 
     public BookViewModel buildBookViewModel(Book book) {
@@ -46,5 +50,20 @@ public class BookServiceLayer {
         bvm.setAuthor(book.getAuthor());
         bvm.setNoteList(noteServerClient.getAllNotesByBookId(book.getBookId()));
         return bvm;
+    }
+    public void updateBookViewModel(BookViewModel bvm){
+        Book book=new Book();
+        book.setAuthor(bvm.getAuthor());
+        book.setTitle(bvm.getTitle());
+        book=bookRepository.save(book);
+        bvm.getNoteList().forEach(
+                x -> noteServerClient.updateNote(x)
+        );
+    }
+    public void deleteBookViewModel(BookViewModel bvm){
+        bookRepository.deleteById(bvm.getBookId());
+        bvm.getNoteList().forEach(
+                x -> noteServerClient.deleteNote(x.getNoteId())
+        );
     }
 }
