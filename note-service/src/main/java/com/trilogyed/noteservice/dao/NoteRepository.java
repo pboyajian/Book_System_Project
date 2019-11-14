@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Integer> {
-    public List<Note>findByBookId(int bookId);
+    public List<Note> findByBookId(int bookId);
 }
 
