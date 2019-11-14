@@ -9,6 +9,7 @@ public class MessageListener {
 
     @RabbitListener(queues = NoteQueueConsumerApplication.QUEUE_NAME)
     public void receiveMessage(Note msg) {
+
         System.out.println(msg.toString());
     }
 }
