@@ -4,6 +4,7 @@ import com.trilogyed.bookservice.dao.BookRepository;
 import com.trilogyed.bookservice.dto.Book;
 import com.trilogyed.bookservice.util.feign.NoteServerClient;
 import com.trilogyed.bookservice.viewmodel.BookViewModel;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,15 @@ public class BookServiceLayer {
     private BookRepository bookRepository;
 
     private NoteServerClient noteServerClient;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    public static final String EXCHANGE = "note-exchange";
+    public static final String ROUTING_KEY = "note.#";
+
+    public BookServiceLayer(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public BookServiceLayer(BookRepository bookRepository, NoteServerClient noteServerClient) {
         this.bookRepository = bookRepository;
@@ -28,7 +38,9 @@ public class BookServiceLayer {
         book.setTitle(bvm.getTitle());
         book=bookRepository.save(book);
         bvm.getNoteList().forEach(
-                x -> noteServerClient.addNote(x)
+                x ->{ System.out.println("Sending message...");
+                rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, x);
+                System.out.println("Message Sent");}
         );
         bvm.setBookId(book.getBookId());
         return bvm;
@@ -57,7 +69,9 @@ public class BookServiceLayer {
         book.setTitle(bvm.getTitle());
         book=bookRepository.save(book);
         bvm.getNoteList().forEach(
-                x -> noteServerClient.updateNote(x)
+                x -> {System.out.println("Sending message...");
+                rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, x);
+                System.out.println("Message Sent");}
         );
     }
     public void deleteBookViewModel(BookViewModel bvm){
