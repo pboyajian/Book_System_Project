@@ -14,8 +14,9 @@ import java.util.List;
 
 @Service
 public class BookServiceLayer {
-
+    @Autowired
     private BookRepository bookRepository;
+    @Autowired
     private NoteServerClient noteServerClient;
 
     @Autowired
@@ -41,12 +42,14 @@ public class BookServiceLayer {
         book.setAuthor(bvm.getAuthor());
         book.setTitle(bvm.getTitle());
         book=bookRepository.save(book);
+        bvm.setBookId(book.getBookId());
         bvm.getNoteList().forEach(
-                x ->{ System.out.println("Sending message...");
+                x ->{x.setBookId(bvm.getBookId());
+                    System.out.println("Sending message...");
                     rabbitTemplate.convertAndSend(EXCHANGE, ROUTING_KEY, x);
                     System.out.println("Message Sent");}
         );
-        bvm.setBookId(book.getBookId());
+        bvm.setNoteList(noteServerClient.getAllNotesByBookId(bvm.getBookId()));
         return bvm;
     }
     public BookViewModel findBook(int id){

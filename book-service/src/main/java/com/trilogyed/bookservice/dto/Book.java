@@ -10,7 +10,7 @@ import java.util.Objects;
 @Table(name="book")
 public class Book {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer bookId;
     private String title;
     private String author;

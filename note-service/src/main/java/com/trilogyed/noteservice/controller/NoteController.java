@@ -26,13 +26,19 @@ public class NoteController {
     List<Note> getAllNote(){
         return noteRepo.findAll();
     }
-//
-//    @RequestMapping(value = "/note", method = RequestMethod.PUT)
-//    void updateNote(@RequestBody Note note){}
-//
-//    @RequestMapping(value = "/note/{id}", method = RequestMethod.DELETE)
-//    void deleteNote(@PathVariable int id){}
-//
-//    @RequestMapping(value = "/note/book/{bookId}", method = RequestMethod.GET)
-//    List<Note> getAllNotesByBookId(@PathVariable int bookId);
+
+    @RequestMapping(value = "/note", method = RequestMethod.PUT)
+    void updateNote(@RequestBody Note note){
+        noteRepo.save(note);
+    }
+
+    @RequestMapping(value = "/note/{id}", method = RequestMethod.DELETE)
+    void deleteNote(@PathVariable int id){
+        noteRepo.deleteById(id);
+    }
+
+    @RequestMapping(value = "/note/book/{bookId}", method = RequestMethod.GET)
+    List<Note> getAllNotesByBookId(@PathVariable int bookId){
+        return noteRepo.findByBookId(bookId);
+    }
 }
