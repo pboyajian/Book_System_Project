@@ -45,9 +45,7 @@ public class BookServiceLayerTest {
         bvm.setTitle(correctTitle);
         List<Note> notes = new ArrayList<>();
         Note note2 = new Note();
-        note2.setBookId(1);
         note2.setNote("Test");
-        note2.setNoteId(1);
         notes.add(note2);
         bvm.setNoteList(notes);
         BookViewModel addedBvm=serviceLayer.addBook(bvm);
@@ -106,6 +104,8 @@ public class BookServiceLayerTest {
         when(noteServerClient.getAllNote()).thenReturn(noteList);
         when(noteServerClient.getAllNotesByBookId(1)).thenReturn(noteList);
     }
+
+//    private void setUp
 
     private void setUpBookRepoMock(){
 

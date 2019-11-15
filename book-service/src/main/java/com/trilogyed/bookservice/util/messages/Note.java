@@ -10,10 +10,11 @@ public class Note {
     public Note() {
     }
 
-    public Note(int bookId, String note) {
-        this.bookId = bookId;
+    public Note(String note) {
         this.note = note;
     }
+
+
 
     public int getNoteId() {
         return noteId;
