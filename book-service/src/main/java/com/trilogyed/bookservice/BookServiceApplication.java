@@ -19,7 +19,6 @@ public class BookServiceApplication {
 		rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
 		return rabbitTemplate;
 	}
-
 	@Bean
 	public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
 		return new Jackson2JsonMessageConverter();

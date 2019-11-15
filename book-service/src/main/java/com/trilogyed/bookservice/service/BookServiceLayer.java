@@ -24,6 +24,9 @@ public class BookServiceLayer {
     public static final String EXCHANGE = "note-exchange";
     public static final String ROUTING_KEY = "note.#";
 
+    public BookServiceLayer() {
+    }
+
     public BookServiceLayer(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
